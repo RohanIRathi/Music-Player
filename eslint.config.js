@@ -5,6 +5,26 @@ const expoConfig = require('eslint-config-expo/flat');
 module.exports = defineConfig([
   expoConfig,
   {
-    ignores: ['dist/*'],
+    ignores: [
+      'dist/*',
+      '**/node_modules/**',
+
+      '**/.expo/**',
+      '**/.next/**',
+      '**/__generated__/**',
+      '**/build/**',
+
+      '/react-native-lab/react-native/**',
+      '/docs/react-native-website/**',
+
+      '**/android/**',
+      '**/assets/**',
+      '**/bin/**',
+      '**/fastlane/**',
+      '**/ios/**',
+      '**/kotlin/providers/**',
+      '**/vendored/**',
+      '/docs/public/static/**'
+    ],
   },
 ]);

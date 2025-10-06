@@ -1,17 +1,21 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+	"extends": "expo/tsconfig.base",
+	"compilerOptions": {
+		"strict": true,
+		"paths": {
+			"@/*": ["./src/*"],
+			"@/assets/*": ["./assets/*"]
+		},
+		"target": "es6",
+		"module": "node16",
+		"moduleResolution": "node16",
+		"jsx": "react-native",
+		"lib": ["DOM", "ESNext"],
+		"noEmit": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"baseUrl": "."
+	},
+	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+	"exclude": ["node_modules"]
 }
