@@ -1,7 +1,12 @@
 import { colors, fontSize } from '@/constants/tokens'
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
-import { BlurView } from 'expo-blur'
-import { StyleSheet } from 'react-native'
+
+interface TabBarIconProps {
+	focused: boolean
+	color: string
+	size: number
+}
 
 const TabsNavigation = () => {
 	return (
@@ -11,6 +16,7 @@ const TabsNavigation = () => {
 				tabBarLabelStyle: {
 					fontSize: fontSize.sm,
 					fontWeight: '500',
+					color: colors.text,
 				},
 				headerShown: false,
 				tabBarStyle: {
@@ -19,12 +25,57 @@ const TabsNavigation = () => {
 					borderTopRightRadius: 20,
 					borderTopWidth: 0,
 					paddingTop: 8,
+					backgroundColor: colors.tabBarColor,
 				},
 			}}>
-			<Tabs.Screen name="favorites" />
-			<Tabs.Screen name="playlists" />
-			<Tabs.Screen name="(songs)" />
-			<Tabs.Screen name="artists" />
+			<Tabs.Screen
+				name="favorites"
+				options={{
+					title: 'Favorites',
+					tabBarIcon: ({ focused, color, size }: TabBarIconProps) => (
+						<FontAwesome
+							name={focused ? 'heart' : 'heart-o'}
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="playlists"
+				options={{
+					title: 'Playlists',
+					tabBarIcon: ({ focused, color, size }: TabBarIconProps) => (
+						<MaterialCommunityIcons
+							name={focused ? 'playlist-music' : 'playlist-music-outline'}
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="(songs)"
+				options={{
+					title: 'Songs',
+					tabBarIcon: ({ focused, color, size }: TabBarIconProps) => (
+						<Ionicons
+							name={focused ? 'musical-note' : 'musical-note-outline'}
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="artists"
+				options={{
+					title: 'Artists',
+					tabBarIcon: ({ focused, color, size }: TabBarIconProps) => (
+						<FontAwesome name={focused ? 'user' : 'user-o'} size={size} color={color} />
+					),
+				}}
+			/>
 		</Tabs>
 	)
 }
