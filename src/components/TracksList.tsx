@@ -1,9 +1,10 @@
-import library from '@/assets/data/library.json'
-import { utilStyles } from '@/styles'
-import { FlatList, FlatListProps, View } from 'react-native'
-import TrackListItem from './TrackListItem'
+import { utilStyles } from '@/styles/index.ts'
+import { FlatList, FlatListProps, ListRenderItem, View } from 'react-native'
+import TrackListItem, { TrackListItemProps } from './TrackListItem.tsx'
 
-export interface TracksListProps extends Partial<FlatListProps<unknown>> {}
+export interface TracksListProps extends Partial<FlatListProps<TrackListItemProps>> {
+	tracks: TrackListItemProps[]
+}
 
 const ItemDivider = () => (
 	<View
@@ -11,14 +12,16 @@ const ItemDivider = () => (
 	/>
 )
 
+const renderItem: ListRenderItem<TrackListItemProps> = ({ item: track }) => (
+	<TrackListItem {...track} />
+)
+
 const TracksList = ({ ...flatListProps }: TracksListProps) => {
 	return (
-		<FlatList
-			data={library}
-			ItemSeparatorComponent={<ItemDivider />}
-			renderItem={({ item: track }) => (
-				<TrackListItem title={track.title} image={track.artwork} artist={track.artist} />
-			)}
+		<FlatList<TrackListItemProps>
+			data={flatListProps.tracks}
+			ItemSeparatorComponent={ItemDivider}
+			renderItem={renderItem}
 			{...flatListProps}
 		/>
 	)

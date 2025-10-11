@@ -1,3 +1,5 @@
+import { ThemeProp } from 'react-native-paper/lib/typescript/types.ts'
+
 export const colors = {
 	primary: '#fc3c44',
 	background: '#000',
@@ -7,6 +9,7 @@ export const colors = {
 	maximumTrackTintColor: 'rgba(255,255,255,0.4)',
 	minimumTrackTintColor: 'rgba(255,255,255,0.6)',
 	tabBarColor: 'rgba(0,0,0,0.7)',
+	searchBarBackground: 'rgba(20,20,20,0.9)',
 }
 
 export const fontSize = {
@@ -19,4 +22,16 @@ export const fontSize = {
 
 export const screenPadding = {
 	horizontal: 24,
+}
+
+export const searchBarThemes: ThemeProp = {
+	colors: {
+		onSurface: colors.textMuted,
+		outline: colors.textMuted,
+		primary: colors.maximumTrackTintColor,
+		onSurfaceVariant: colors.textMuted,
+		elevation: {
+			level3: colors.searchBarBackground,
+		},
+	},
 }

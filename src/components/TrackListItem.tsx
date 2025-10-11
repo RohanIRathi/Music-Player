@@ -1,16 +1,19 @@
-import { unknownTrackImageUri } from '@/constants/images'
-import { colors } from '@/constants/tokens'
-import { trackStyles } from '@/styles'
+import { unknownTrackImageUri } from '@/constants/images.ts'
+import { colors } from '@/constants/tokens.ts'
+import { trackStyles } from '@/styles/index.ts'
 import { Image } from 'expo-image'
 import { Text, TouchableHighlight, View } from 'react-native'
 
 export interface TrackListItemProps {
 	title: string
-	image: string | undefined
-	artist: string | undefined
+	artwork?: string | undefined
+	artist?: string | undefined
+	url: string
+	rating?: number | undefined
+	playlist?: string[] | undefined
 }
 
-const TrackListItem = ({ title, image, artist }: TrackListItemProps) => {
+const TrackListItem = ({ title, artwork: image, artist }: TrackListItemProps) => {
 	const isActiveTrack = false
 	return (
 		<TouchableHighlight>

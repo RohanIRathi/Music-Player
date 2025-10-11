@@ -1,13 +1,36 @@
-import TracksList from '@/components/TracksList'
-import { screenPadding } from '@/constants/tokens'
-import defaultStyles from '@/styles'
+import library from '@/assets/data/library.json'
+import TracksList from '@/components/TracksList.tsx'
+import { fontSize, screenPadding, searchBarThemes } from '@/constants/tokens.ts'
+import defaultStyles, { utilStyles } from '@/styles/index.ts'
+import { trackTitleFilter } from '@/utils/filters.ts'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { useMemo, useState } from 'react'
 import { ScrollView, View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
 
 const SongsScreen = () => {
-	const tabHeight = useBottomTabBarHeight() + 5
+	const tabHeight = useBottomTabBarHeight() + 85
+	const [search, setSearch] = useState('')
+
+	const filteredSongs = useMemo(() => {
+		if (!search) return library
+
+		return library.filter(trackTitleFilter(search))
+	}, [search])
+
 	return (
 		<View style={defaultStyles.container}>
+			<Searchbar
+				placeholder="Find in Songs"
+				onChangeText={setSearch}
+				value={search}
+				theme={searchBarThemes}
+				style={utilStyles.searchBar}
+				inputStyle={{
+					fontSize: fontSize.lg,
+				}}
+			/>
+
 			<ScrollView
 				contentInsetAdjustmentBehavior="automatic"
 				style={{
@@ -15,7 +38,7 @@ const SongsScreen = () => {
 					paddingTop: 5,
 				}}
 				contentContainerStyle={{ flexGrow: 1, paddingBottom: tabHeight }}>
-				<TracksList scrollEnabled={false} />
+				<TracksList tracks={filteredSongs} scrollEnabled={false} />
 			</ScrollView>
 		</View>
 	)

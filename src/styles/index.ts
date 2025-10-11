@@ -1,4 +1,4 @@
-import { colors, fontSize } from '@/constants/tokens'
+import { colors, fontSize } from '@/constants/tokens.ts'
 import { StyleSheet } from 'react-native'
 
 const defaultStyles = StyleSheet.create({
@@ -17,6 +17,13 @@ export const utilStyles = StyleSheet.create({
 		borderColor: colors.textMuted,
 		borderWidth: StyleSheet.hairlineWidth,
 		opacity: 0.45,
+	},
+	searchBar: {
+		borderColor: colors.textMuted,
+		borderWidth: 1,
+		borderRadius: 10,
+		marginVertical: 5,
+		marginHorizontal: 5,
 	},
 })
 

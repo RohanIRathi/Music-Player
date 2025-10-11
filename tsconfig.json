@@ -14,7 +14,8 @@
 		"noEmit": true,
 		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
-		"baseUrl": "."
+		"baseUrl": ".",
+		"allowImportingTsExtensions": true
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
 	"exclude": ["node_modules"]
