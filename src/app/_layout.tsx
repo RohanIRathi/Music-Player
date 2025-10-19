@@ -31,12 +31,12 @@ const App = () => {
 
 const RootNavigation = () => {
 	return (
-		<Stack>
+		<Stack style={{ flex: 1, backgroundColor: 'transparent' }}>
 			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 			<Stack.Screen
 				name="player"
 				options={{
-					presentation: 'formSheet',
+					presentation: 'transparentModal',
 					animation: 'slide_from_bottom',
 					gestureDirection: 'vertical',
 					headerShown: false,

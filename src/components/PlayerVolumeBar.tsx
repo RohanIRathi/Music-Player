@@ -2,6 +2,7 @@ import { colors } from '@/constants/tokens.ts'
 import useTrackPlayerVolume from '@/hooks/useTrackPlayerVolume.tsx'
 import { utilStyles } from '@/styles/index.ts'
 import { Ionicons } from '@expo/vector-icons'
+import { useEffect } from 'react'
 import { View, ViewProps } from 'react-native'
 import { Slider } from 'react-native-awesome-slider'
 import { useSharedValue } from 'react-native-reanimated'
@@ -13,7 +14,9 @@ const PlayerVolumeBar = ({ style }: ViewProps) => {
 
 	const { volume, updateVolume } = useTrackPlayerVolume()
 
-	progress.value = volume ?? 0
+	useEffect(() => {
+		progress.value = volume ?? 0
+	}, [volume])
 
 	return (
 		<View style={style}>

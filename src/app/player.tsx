@@ -5,9 +5,11 @@ import PlayerRepeatToggle from '@/components/PlayerRepeatToggle.tsx'
 import PlayerVolumeBar from '@/components/PlayerVolumeBar.tsx'
 import { unknownTrackImageUri } from '@/constants/images.ts'
 import { colors } from '@/constants/tokens.ts'
+import usePlayerBackground from '@/hooks/usePlayerBackground.tsx'
 import defaultStyles, { playerStyles, utilStyles } from '@/styles/index.ts'
 import { FontAwesome } from '@expo/vector-icons'
 import { Image } from 'expo-image'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
@@ -19,6 +21,7 @@ import { useActiveTrack } from 'react-native-track-player'
 const PlayerScreen = () => {
 	const activeTrack = useActiveTrack()
 	const { top, bottom } = useSafeAreaInsets()
+	const { imageColors } = usePlayerBackground(activeTrack?.artwork ?? unknownTrackImageUri)
 	const isFavorite = false
 
 	const router = useRouter()
@@ -55,68 +58,80 @@ const PlayerScreen = () => {
 	}
 
 	return (
-		<GestureDetector gesture={panGesture}>
-			<AnimatedView style={[playerStyles.overlayContainer, animationStyle]}>
-				<DismissPlayerSymbol />
-				<View style={{ flex: 1, marginTop: top + 70, marginBottom: bottom }}>
-					<View style={playerStyles.artworkImageContainer}>
-						<Image
-							source={{ uri: activeTrack.artwork ?? unknownTrackImageUri }}
-							priority={'high'}
-							contentFit="cover"
-							style={playerStyles.artworkImage}
-						/>
-					</View>
-					<View style={{ flex: 1 }}>
-						<View style={{ marginTop: 'auto' }}>
-							{/* Track Title Row */}
-							<View style={{ height: 60 }}>
-								<View
-									style={{
-										flexDirection: 'row',
-										justifyContent: 'space-between',
-										alignItems: 'center',
-									}}>
-									{/* Track Title */}
-									<View style={playerStyles.trackTitleContainer}>
-										<MovingText
-											text={activeTrack.title ?? ''}
-											animationThreshold={30}
-											style={playerStyles.trackTitleText}
+		<LinearGradient
+			style={{ flex: 1 }}
+			colors={
+				imageColors
+					? [imageColors.average, imageColors.muted, imageColors.dominant]
+					: [colors.background, colors.background]
+			}
+			start={{ x: 0, y: 0 }}
+			end={{ x: 1, y: 1 }}>
+			<GestureDetector gesture={panGesture}>
+				<AnimatedView style={[playerStyles.overlayContainer, animationStyle]}>
+					<DismissPlayerSymbol />
+					<View style={{ flex: 1, marginTop: top + 70, marginBottom: bottom }}>
+						<View style={playerStyles.artworkImageContainer}>
+							<Image
+								source={{ uri: activeTrack.artwork ?? unknownTrackImageUri }}
+								priority={'high'}
+								contentFit="cover"
+								style={playerStyles.artworkImage}
+							/>
+						</View>
+						<View style={{ flex: 1 }}>
+							<View style={{ marginTop: 'auto' }}>
+								{/* Track Title Row */}
+								<View style={{ height: 60 }}>
+									<View
+										style={{
+											flexDirection: 'row',
+											justifyContent: 'space-between',
+											alignItems: 'center',
+										}}>
+										{/* Track Title */}
+										<View style={playerStyles.trackTitleContainer}>
+											<MovingText
+												text={activeTrack.title ?? ''}
+												animationThreshold={30}
+												style={playerStyles.trackTitleText}
+											/>
+										</View>
+										{/* Favorite Button Icon */}
+										<FontAwesome
+											name={isFavorite ? 'heart' : 'heart-o'}
+											size={20}
+											color={isFavorite ? colors.primary : colors.icon}
+											style={{
+												marginHorizontal: 14,
+											}}
+											onPress={toggleFavorite}
 										/>
 									</View>
-
-									{/* Favorite Button Icon */}
-									<FontAwesome
-										name={isFavorite ? 'heart' : 'heart-o'}
-										size={20}
-										color={isFavorite ? colors.primary : colors.icon}
-										style={{
-											marginHorizontal: 14,
-										}}
-										onPress={toggleFavorite}
-									/>
+									{/* Track Artist */}
+									{activeTrack.artist && (
+										<Text
+											numberOfLines={1}
+											style={[
+												playerStyles.trackArtistText,
+												{ marginTop: 6 },
+											]}>
+											{activeTrack.artist}
+										</Text>
+									)}
 								</View>
-								{/* Track Artist */}
-								{activeTrack.artist && (
-									<Text
-										numberOfLines={1}
-										style={[playerStyles.trackArtistText, { marginTop: 6 }]}>
-										{activeTrack.artist}
-									</Text>
-								)}
+								<PlayerProgressBar style={{ marginTop: 32 }} />
+								<PlayerControls style={{ marginTop: 40 }} />
 							</View>
-							<PlayerProgressBar style={{ marginTop: 32 }} />
-							<PlayerControls style={{ marginTop: 40 }} />
-						</View>
-						<PlayerVolumeBar style={{ marginTop: 'auto', marginBottom: 30 }} />
-						<View style={utilStyles.centeredRow}>
-							<PlayerRepeatToggle size={30} style={{ marginBottom: 6 }} />
+							<PlayerVolumeBar style={{ marginTop: 'auto', marginBottom: 30 }} />
+							<View style={utilStyles.centeredRow}>
+								<PlayerRepeatToggle size={30} style={{ marginBottom: 6 }} />
+							</View>
 						</View>
 					</View>
-				</View>
-			</AnimatedView>
-		</GestureDetector>
+				</AnimatedView>
+			</GestureDetector>
+		</LinearGradient>
 	)
 }
 

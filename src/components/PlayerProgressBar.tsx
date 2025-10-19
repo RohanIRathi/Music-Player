@@ -1,6 +1,7 @@
 import { colors } from '@/constants/tokens.ts'
 import { playerControlsStyles, utilStyles } from '@/styles/index.ts'
 import { formatSecondsToMinutes } from '@/utils/misc.ts'
+import { useEffect } from 'react'
 import { Text, View, ViewProps } from 'react-native'
 import { Slider } from 'react-native-awesome-slider'
 import { useSharedValue } from 'react-native-reanimated'
@@ -16,9 +17,11 @@ const PlayerProgressBar = ({ style }: ViewProps) => {
 	const trackElapsedTime = formatSecondsToMinutes(position)
 	const trackRemainingTime = formatSecondsToMinutes(duration - position)
 
-	if (!isSliding.value) {
-		progress.value = duration > 0 ? position / duration : 0
-	}
+	useEffect(() => {
+		if (!isSliding.value) {
+			progress.value = duration > 0 ? position / duration : 0
+		}
+	}, [position, duration])
 
 	return (
 		<View style={style}>

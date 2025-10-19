@@ -17,9 +17,9 @@ export const PlayerControls = ({ style }: PlayerControlsProps) => {
 	return (
 		<View style={[playerControlsStyles.container, style]}>
 			<View style={[playerControlsStyles.row]}>
-				<SkipToPreviousButton iconSize={40} />
-				<PlayPauseButton iconSize={40} />
-				<SkipToNextButton iconSize={40} />
+				<SkipToPreviousButton />
+				<PlayPauseButton iconSize={35} />
+				<SkipToNextButton />
 			</View>
 		</View>
 	)

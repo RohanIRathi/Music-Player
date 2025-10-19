@@ -124,7 +124,7 @@ export const playerStyles = StyleSheet.create({
 	overlayContainer: {
 		...defaultStyles.container,
 		paddingHorizontal: screenPadding.horizontal,
-		backgroundColor: 'rgba(150,150,150,1)',
+		backgroundColor: 'transparent',
 	},
 	artworkImageContainer: {
 		shadowOffset: { width: 0, height: 8 },
