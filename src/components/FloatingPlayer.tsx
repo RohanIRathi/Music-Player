@@ -2,12 +2,14 @@ import { unknownTrackImageUri } from '@/constants/images.ts'
 import { useLastActiveTrack } from '@/hooks/useLastActiveTrack.tsx'
 import { trackStyles } from '@/styles/index.ts'
 import { Image } from 'expo-image'
+import { useRouter } from 'expo-router'
 import { TouchableOpacity, View } from 'react-native'
 import { useActiveTrack } from 'react-native-track-player'
 import MovingText from './MovingText.tsx'
 import { PlayPauseButton, SkipToNextButton } from './PlayerControls.tsx'
 
 const FloatingPlayer = () => {
+	const router = useRouter()
 	const activeTrack = useActiveTrack()
 	const lastActiveTrack = useLastActiveTrack()
 
@@ -15,8 +17,15 @@ const FloatingPlayer = () => {
 
 	if (!displayedTrack) return null
 
+	const handlePress = () => {
+		router.push('/player')
+	}
+
 	return (
-		<TouchableOpacity activeOpacity={0.9} style={trackStyles.floatingPlayerContainer}>
+		<TouchableOpacity
+			onPress={handlePress}
+			activeOpacity={0.9}
+			style={trackStyles.floatingPlayerContainer}>
 			<>
 				<Image
 					source={{

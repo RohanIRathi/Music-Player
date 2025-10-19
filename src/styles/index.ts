@@ -1,4 +1,4 @@
-import { colors, fontSize } from '@/constants/tokens.ts'
+import { colors, fontSize, screenPadding } from '@/constants/tokens.ts'
 import { StyleSheet } from 'react-native'
 
 const defaultStyles = StyleSheet.create({
@@ -43,6 +43,15 @@ export const utilStyles = StyleSheet.create({
 		alignSelf: 'center',
 		marginTop: 20,
 		opacity: 0.5,
+	},
+	centeredRow: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	slider: {
+		height: 7,
+		borderRadius: 16,
 	},
 })
 
@@ -108,6 +117,68 @@ export const trackStyles = StyleSheet.create({
 		height: 70,
 		alignSelf: 'center',
 		opacity: 0.7,
+	},
+})
+
+export const playerStyles = StyleSheet.create({
+	overlayContainer: {
+		...defaultStyles.container,
+		paddingHorizontal: screenPadding.horizontal,
+		backgroundColor: 'rgba(150,150,150,1)',
+	},
+	artworkImageContainer: {
+		shadowOffset: { width: 0, height: 8 },
+		shadowOpacity: 0.44,
+		shadowRadius: 11.0,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		height: '45%',
+	},
+	artworkImage: {
+		width: '100%',
+		height: '100%',
+		resizeMode: 'cover',
+		borderRadius: 12,
+	},
+	trackTitleContainer: {
+		flex: 1,
+		overflow: 'hidden',
+	},
+	trackTitleText: {
+		...defaultStyles.text,
+		fontSize: fontSize.xl,
+		fontWeight: '700',
+	},
+	trackArtistText: {
+		...defaultStyles.text,
+		fontSize: fontSize.md,
+		opacity: 0.8,
+		maxWidth: '90%',
+	},
+})
+
+export const playerControlsStyles = StyleSheet.create({
+	container: {
+		width: '100%',
+	},
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		alignItems: 'center',
+	},
+	timeText: {
+		...defaultStyles.text,
+		color: colors.text,
+		opacity: 0.75,
+		fontSize: fontSize.xs,
+		letterSpacing: 0.7,
+		fontWeight: '500',
+	},
+	timeRow: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'baseline',
+		marginTop: 20,
 	},
 })
 
