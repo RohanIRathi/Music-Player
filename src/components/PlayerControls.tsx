@@ -2,7 +2,8 @@ import { colors } from '@/constants/tokens.ts'
 import { playerControlsStyles } from '@/styles/index.ts'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { TouchableOpacity, View, ViewStyle } from 'react-native'
-import TrackPlayer, { useIsPlaying } from 'react-native-track-player'
+import LoaderKitView from 'react-native-loader-kit'
+import TrackPlayer, { State, useIsPlaying, usePlaybackState } from 'react-native-track-player'
 
 interface PlayerControlsProps {
 	style?: ViewStyle
@@ -27,6 +28,21 @@ export const PlayerControls = ({ style }: PlayerControlsProps) => {
 
 export const PlayPauseButton = ({ style, iconSize }: PlayerButtonProps) => {
 	const { playing } = useIsPlaying()
+	const playbackState = usePlaybackState()
+	console.log(playbackState)
+
+	if (playbackState.state === State.Buffering || playbackState === State.Loading)
+		return (
+			<LoaderKitView
+				name={'BallScaleRippleMultiple'}
+				style={{ height: (iconSize ?? 30) * 1.3, width: (iconSize ?? 30) * 1.3 }}
+				color={colors.text}
+			/>
+		)
+
+	if (playbackState.state === State.Error) {
+		TrackPlayer.skipToNext()
+	}
 
 	return (
 		<View style={[{ height: iconSize }, style]}>

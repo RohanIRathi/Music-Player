@@ -5,8 +5,7 @@ import { Entypo, Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
 import { Text, TouchableHighlight, View } from 'react-native'
 import LoaderKit from 'react-native-loader-kit'
-import { useActiveTrack, useIsPlaying } from 'react-native-track-player'
-import { Track } from 'react-native-track-player/interfaces'
+import { Track, useActiveTrack, useIsPlaying } from 'react-native-track-player'
 
 export interface TrackListItemProps {
 	track: Track
@@ -35,7 +34,7 @@ const TrackListItem = ({ track, onTrackSelect: handleTrackSelect }: TrackListIte
 						(playing ? (
 							<LoaderKit
 								style={trackStyles.trackPlayingIconIndicator}
-								name="LineScaleParty"
+								name="AudioEqualizer"
 								color={colors.icon}
 							/>
 						) : (

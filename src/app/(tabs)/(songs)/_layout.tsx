@@ -1,5 +1,5 @@
-import { colors, fontSize } from '@/constants/tokens'
-import defaultStyles from '@/styles'
+import { colors, fontSize } from '@/constants/tokens.ts'
+import defaultStyles from '@/styles/index.ts'
 import { Stack } from 'expo-router'
 import { View } from 'react-native'
 

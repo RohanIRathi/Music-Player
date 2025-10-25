@@ -9,7 +9,7 @@ export const colors = {
 	maximumTrackTintColor: 'rgba(255,255,255,0.4)',
 	minimumTrackTintColor: 'rgba(255,255,255,0.6)',
 	tabBarColor: 'rgba(0,0,0,0.7)',
-	searchBarBackground: 'rgba(20,20,20,0.9)',
+	searchBarBackground: 'rgba(30,30,30,0.9)',
 }
 
 export const fontSize = {

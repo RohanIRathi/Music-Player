@@ -2,12 +2,16 @@ import { useEffect, useRef } from 'react'
 import TrackPlayer, { RepeatMode } from 'react-native-track-player'
 
 const setupPlayer = async () => {
-	await TrackPlayer.setupPlayer({
-		maxCacheSize: 1024 * 10,
-	})
+	try {
+		const currentState = await TrackPlayer.getPlaybackState()
+	} catch {
+		await TrackPlayer.setupPlayer({
+			maxCacheSize: 1024 * 10,
+		})
 
-	await TrackPlayer.setVolume(0.4)
-	await TrackPlayer.setRepeatMode(RepeatMode.Off)
+		await TrackPlayer.setVolume(0.4)
+		await TrackPlayer.setRepeatMode(RepeatMode.Off)
+	}
 }
 
 export const useTrackPlayerSetup = ({ onLoad }: { onLoad?: () => void }) => {

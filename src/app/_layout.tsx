@@ -1,10 +1,12 @@
 import { useLogTrackPlayerState } from '@/hooks/useLogTrackPlayerState.tsx'
 import { useTrackPlayerSetup } from '@/hooks/useTrackPlayerSetup.tsx'
+import store from '@/stores/store.tsx'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useCallback } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { Provider } from 'react-redux'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -21,10 +23,12 @@ const App = () => {
 
 	return (
 		<SafeAreaProvider>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<RootNavigation />
-				<StatusBar style="auto" />
-			</GestureHandlerRootView>
+			<Provider store={store}>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<RootNavigation />
+					<StatusBar style="auto" />
+				</GestureHandlerRootView>
+			</Provider>
 		</SafeAreaProvider>
 	)
 }
