@@ -182,4 +182,23 @@ export const playerControlsStyles = StyleSheet.create({
 	},
 })
 
+export const queueControlsStyle = StyleSheet.create({
+	button: {
+		padding: 12,
+		backgroundColor: colors.searchBarBackground,
+		borderRadius: 8,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		columnGap: 8,
+	},
+	buttonText: {
+		...defaultStyles.text,
+		color: colors.primary,
+		fontWeight: '600',
+		fontSize: 18,
+		textAlign: 'center',
+	},
+})
+
 export default defaultStyles

@@ -6,11 +6,13 @@ import { Image } from 'expo-image'
 import { useRef } from 'react'
 import { FlatList, FlatListProps, ListRenderItem, Text, View } from 'react-native'
 import { default as Track, default as TrackPlayer } from 'react-native-track-player'
+import QueueControls from './QueueControls.tsx'
 import TrackListItem from './TrackListItem.tsx'
 
 export interface TracksListProps extends Partial<FlatListProps<Track>> {
 	id: string
 	tracks: Track[]
+	hideQueueControls?: boolean
 }
 
 const ItemDivider = () => (
@@ -19,7 +21,7 @@ const ItemDivider = () => (
 	/>
 )
 
-const TracksList = ({ id, tracks, ...flatListProps }: TracksListProps) => {
+const TracksList = ({ id, tracks, hideQueueControls, ...flatListProps }: TracksListProps) => {
 	const queueOffset = useRef(0)
 	const activeQueueId = useAppSelector(useQueue)
 	const dispatch = useAppDispatch()
@@ -60,6 +62,11 @@ const TracksList = ({ id, tracks, ...flatListProps }: TracksListProps) => {
 		<FlatList<Track>
 			data={tracks}
 			ItemSeparatorComponent={ItemDivider}
+			ListHeaderComponent={
+				!hideQueueControls ? (
+					<QueueControls tracks={tracks} style={{ paddingVertical: 15 }} />
+				) : undefined
+			}
 			ListEmptyComponent={
 				<View>
 					<Image source={unknownTrackImageUri} style={utilStyles.emptyContentImage} />
