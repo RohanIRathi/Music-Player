@@ -1,5 +1,5 @@
 import library from '@/assets/data/library.json'
-import { TrackWithPlaylist } from '@/utils/types.ts'
+import { Artist, TrackWithPlaylist } from '@/utils/types.ts'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Track from 'react-native-track-player'
 import { RootState } from '../store.tsx'
@@ -28,15 +28,25 @@ const librarySlice = createSlice({
 
 export const useTracks = (state: RootState) => state.library.tracks
 
-export const useFavorites = () => {
-	const favorites = createSelector([useTracks], (tracks: TrackWithPlaylist[]) =>
-		tracks.filter((track: Track) => track.rating === 1)
-	)
+export const useArtists = createSelector([useTracks], (tracks: TrackWithPlaylist[]) =>
+	tracks.reduce((acc, track) => {
+		const existingArtist = acc.find((artist) => artist.name === track.artist)
+		if (existingArtist) {
+			existingArtist.tracks.push(track)
+		} else {
+			acc.push({
+				name: track.artist ?? 'unknown',
+				tracks: [track],
+			})
+		}
 
-	return {
-		favorites,
-	}
-}
+		return acc
+	}, [] as Artist[])
+)
+
+export const useFavorites = createSelector([useTracks], (tracks: TrackWithPlaylist[]) =>
+	tracks.filter((track: Track) => track.rating === 1)
+)
 
 export const { toggleTrackFavorite, addToPlaylist } = librarySlice.actions
 

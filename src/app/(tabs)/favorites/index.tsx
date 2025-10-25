@@ -11,7 +11,7 @@ import { ScrollView, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
 const FavoritesScreen = () => {
-	const favoriteTracks = useAppSelector(useFavorites().favorites)
+	const favoriteTracks = useAppSelector(useFavorites)
 
 	const tabHeight = useBottomTabBarHeight() + 85
 	const [search, setSearch] = useState('')

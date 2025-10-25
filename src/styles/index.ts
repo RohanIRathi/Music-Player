@@ -201,4 +201,32 @@ export const queueControlsStyle = StyleSheet.create({
 	},
 })
 
+export const artistStyles = StyleSheet.create({
+	artistItemContainer: {
+		flexDirection: 'row',
+		columnGap: 14,
+		alignItems: 'center',
+	},
+	artistImage: {
+		borderRadius: 32,
+		width: 40,
+		height: 40,
+	},
+	artistNameText: {
+		...defaultStyles.text,
+		fontSize: fontSize.lg,
+		maxWidth: '80%',
+	},
+	artistImageContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		height: 200,
+		marginTop: 10,
+	},
+	artistHeaderContainer: {
+		flex: 1,
+		marginBottom: 32,
+	},
+})
+
 export default defaultStyles
