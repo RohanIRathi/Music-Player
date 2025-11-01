@@ -229,4 +229,39 @@ export const artistStyles = StyleSheet.create({
 	},
 })
 
+export const playlistStyles = StyleSheet.create({
+	playlistItemContainer: {
+		flexDirection: 'row',
+		columnGap: 14,
+		alignItems: 'center',
+		paddingRight: 90,
+	},
+	playlistArtworkImage: {
+		borderRadius: 8,
+		width: 70,
+		height: 70,
+	},
+	playlistNameText: {
+		...defaultStyles.text,
+		fontSize: 17,
+		fontWeight: '600',
+		maxWidth: '80%',
+	},
+	playlistHeaderContainer: {
+		flex: 1,
+		marginVertical: 16,
+	},
+	artworkImageContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		height: 300,
+	},
+	artworkImage: {
+		width: '85%',
+		height: '100%',
+		resizeMode: 'cover',
+		borderRadius: 15,
+	},
+})
+
 export default defaultStyles

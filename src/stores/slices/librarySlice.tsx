@@ -1,5 +1,6 @@
 import library from '@/assets/data/library.json'
-import { Artist, TrackWithPlaylist } from '@/utils/types.ts'
+import { unknownTrackImageUri } from '@/constants/images.ts'
+import { Artist, Playlist, TrackWithPlaylist } from '@/utils/types.ts'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Track from 'react-native-track-player'
 import { RootState } from '../store.tsx'
@@ -42,6 +43,25 @@ export const useArtists = createSelector([useTracks], (tracks: TrackWithPlaylist
 
 		return acc
 	}, [] as Artist[])
+)
+
+export const usePlaylists = createSelector([useTracks], (tracks: TrackWithPlaylist[]) =>
+	tracks.reduce((acc, track) => {
+		track.playlist?.forEach((playlistName) => {
+			const existingPlaylist = acc.find((playlist) => playlist.name === playlistName)
+			if (existingPlaylist) {
+				existingPlaylist.tracks.push(track)
+			} else {
+				acc.push({
+					name: playlistName,
+					tracks: [track],
+					artworkPreview: track.artwork ?? unknownTrackImageUri,
+				})
+			}
+		})
+
+		return acc
+	}, [] as Playlist[])
 )
 
 export const useFavorites = createSelector([useTracks], (tracks: TrackWithPlaylist[]) =>
