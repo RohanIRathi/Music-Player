@@ -22,8 +22,26 @@ const librarySlice = createSlice({
 	name: 'library',
 	initialState: initialState,
 	reducers: {
-		toggleTrackFavorite: (state, action: PayloadAction<Track>) => {},
-		addToPlaylist: (state, action: PayloadAction<playlistParams>) => {},
+		toggleTrackFavorite: (state, action: PayloadAction<Track>) => {
+			state.tracks = state.tracks.map((currentTrack) => {
+				if (currentTrack.url === action.payload.url) {
+					return { ...currentTrack, rating: currentTrack.rating === 1 ? 0 : 1 }
+				}
+				return currentTrack
+			})
+		},
+		addToPlaylist: (state, action: PayloadAction<playlistParams>) => {
+			state.tracks = state.tracks.map((currentTrack) => {
+				if (currentTrack.url === action.payload.track.url) {
+					return {
+						...currentTrack,
+						playlist: [...(currentTrack.playlist ?? []), action.payload.playlist],
+					}
+				}
+
+				return currentTrack
+			})
+		},
 	},
 })
 

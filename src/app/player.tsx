@@ -6,6 +6,7 @@ import PlayerVolumeBar from '@/components/PlayerVolumeBar.tsx'
 import { unknownTrackImageUri } from '@/constants/images.ts'
 import { colors } from '@/constants/tokens.ts'
 import usePlayerBackground from '@/hooks/usePlayerBackground.tsx'
+import { useTrackPlayerFavorite } from '@/hooks/useTrackPlayerFavorite.tsx'
 import defaultStyles, { playerStyles, utilStyles } from '@/styles/index.ts'
 import { FontAwesome } from '@expo/vector-icons'
 import { Image } from 'expo-image'
@@ -22,7 +23,7 @@ const PlayerScreen = () => {
 	const activeTrack = useActiveTrack()
 	const { top, bottom } = useSafeAreaInsets()
 	const { imageColors } = usePlayerBackground(activeTrack?.artwork ?? unknownTrackImageUri)
-	const isFavorite = false
+	const { isFavorite, toggleFavorite } = useTrackPlayerFavorite()
 
 	const router = useRouter()
 	const translateY = useSharedValue(0)
@@ -46,8 +47,6 @@ const PlayerScreen = () => {
 	const animationStyle = useAnimatedStyle(() => ({
 		transform: [{ translateY: translateY.value }],
 	}))
-
-	function toggleFavorite(): void {}
 
 	if (!activeTrack) {
 		return (
