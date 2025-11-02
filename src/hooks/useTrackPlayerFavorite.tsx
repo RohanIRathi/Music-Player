@@ -1,10 +1,11 @@
 import { toggleTrackFavorite, useFavorites } from '@/stores/slices/librarySlice.tsx'
 import { useCallback } from 'react'
-import TrackPlayer, { useActiveTrack } from 'react-native-track-player'
+// @ts-expect-error
+import TrackPlayer, { Track, useActiveTrack } from 'react-native-track-player'
 import { useAppDispatch, useAppSelector } from './useReduxHooks.ts'
 
-export const useTrackPlayerFavorite = () => {
-	const activeTrack = useActiveTrack()
+export const useTrackPlayerFavorite = ({ track }: Track | undefined) => {
+	const activeTrack = track ?? useActiveTrack()
 	const favorites = useAppSelector(useFavorites)
 	const dispatch = useAppDispatch()
 
@@ -20,7 +21,7 @@ export const useTrackPlayerFavorite = () => {
 		})
 
 		if (activeTrack) {
-			dispatch.call(toggleTrackFavorite, activeTrack)
+			dispatch(toggleTrackFavorite(activeTrack))
 		}
 	}, [isFavorite, toggleTrackFavorite, activeTrack])
 

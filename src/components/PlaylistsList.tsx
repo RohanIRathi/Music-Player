@@ -1,10 +1,12 @@
 import { unknownTrackImageUri } from '@/constants/images.ts'
-import { utilStyles } from '@/styles/index.ts'
+import { fontSize, searchBarThemes } from '@/constants/tokens.ts'
+import defaultStyles, { utilStyles } from '@/styles/index.ts'
+import { playlistNameFilter } from '@/utils/filters.ts'
 import { Playlist } from '@/utils/types.ts'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { Image } from 'expo-image'
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { FlatList, FlatListProps, ListRenderItem, Text, View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
 import PlaylistListItem from './PlaylistListItem.tsx'
 
 interface PlaylistsListProps extends Partial<FlatListProps<Playlist>> {
@@ -17,31 +19,51 @@ const ItemDivider = () => (
 )
 
 const PlaylistsList = ({ playlists, onPlaylistPress, ...flatListProps }: PlaylistsListProps) => {
-	const tabBarHeight = useBottomTabBarHeight() + 80
+	const [search, setSearch] = useState('')
+	const filteredPlaylists = useMemo(() => {
+		if (!search) return playlists
+
+		return playlists.filter(playlistNameFilter(search))
+	}, [search, playlists])
 
 	const renderItem: ListRenderItem<Playlist> = ({ item: playlist }) => {
 		return <PlaylistListItem playlist={playlist} onPress={() => onPlaylistPress(playlist)} />
 	}
 
 	return (
-		<FlatList
-			contentContainerStyle={{ paddingTop: 10, paddingBottom: tabBarHeight }}
-			ItemSeparatorComponent={ItemDivider}
-			ListFooterComponent={ItemDivider}
-			ListEmptyComponent={
-				<View>
-					<Text style={utilStyles.emptyContentText}>No Playlist Foud.</Text>
-					<Image
-						source={{ uri: unknownTrackImageUri }}
-						priority={'normal'}
-						style={utilStyles.emptyContentImage}
-					/>
-				</View>
-			}
-			data={playlists}
-			renderItem={renderItem}
-			{...flatListProps}
-		/>
+		<View style={{ height: '100%' }}>
+			<Searchbar
+				placeholder="Find in Playlists"
+				onChangeText={setSearch}
+				value={search}
+				theme={searchBarThemes}
+				style={utilStyles.searchBar}
+				inputStyle={{
+					fontSize: fontSize.lg,
+				}}
+			/>
+			<FlatList
+				contentContainerStyle={[
+					defaultStyles.container,
+					{ paddingTop: 10, paddingBottom: 120 },
+				]}
+				ItemSeparatorComponent={ItemDivider}
+				ListFooterComponent={ItemDivider}
+				ListEmptyComponent={
+					<View>
+						<Text style={utilStyles.emptyContentText}>No Playlist Foud.</Text>
+						<Image
+							source={{ uri: unknownTrackImageUri }}
+							priority={'normal'}
+							style={utilStyles.emptyContentImage}
+						/>
+					</View>
+				}
+				data={filteredPlaylists}
+				renderItem={renderItem}
+				{...flatListProps}
+			/>
+		</View>
 	)
 }
 

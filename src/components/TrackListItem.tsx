@@ -6,6 +6,7 @@ import { Image } from 'expo-image'
 import React from 'react'
 import { Text, TouchableHighlight, View } from 'react-native'
 import LoaderKit from 'react-native-loader-kit'
+// @ts-expect-error
 import { Track, useActiveTrack, useIsPlaying } from 'react-native-track-player'
 import TrackShortcutsMenu from './TrackShortcutsMenu.tsx'
 import StopPropagation from './utils/StopPropagation.tsx'

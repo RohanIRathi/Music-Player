@@ -9,8 +9,8 @@ interface LibraryState {
 	tracks: TrackWithPlaylist[]
 }
 
-interface playlistParams {
-	track: Track
+export interface PlaylistParams {
+	track: TrackWithPlaylist
 	playlist: string
 }
 
@@ -30,9 +30,12 @@ const librarySlice = createSlice({
 				return currentTrack
 			})
 		},
-		addToPlaylist: (state, action: PayloadAction<playlistParams>) => {
+		addToPlaylist: (state, action: PayloadAction<PlaylistParams>) => {
 			state.tracks = state.tracks.map((currentTrack) => {
-				if (currentTrack.url === action.payload.track.url) {
+				if (
+					currentTrack.url === action.payload.track.url &&
+					!currentTrack.playlist?.find((playlist) => playlist === action.payload.playlist)
+				) {
 					return {
 						...currentTrack,
 						playlist: [...(currentTrack.playlist ?? []), action.payload.playlist],

@@ -264,4 +264,30 @@ export const playlistStyles = StyleSheet.create({
 	},
 })
 
+export const menuStyles = StyleSheet.create({
+	optionsContainer: {
+		...defaultStyles.container,
+		width: 250,
+		padding: 5,
+		backgroundColor: 'rgba(30,30,30,1)',
+		borderRadius: 10,
+	},
+	optionWrapper: {
+		flexDirection: 'row-reverse',
+		padding: 5,
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		paddingVertical: 10,
+		backgroundColor: 'rgba(30,30,30,1)',
+	},
+	optionText: {
+		...defaultStyles.text,
+		fontSize: fontSize.md,
+	},
+	triggerWrapper: {
+		...defaultStyles.container,
+		padding: 5,
+	},
+})
+
 export default defaultStyles
